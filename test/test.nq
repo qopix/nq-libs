@@ -1,0 +1,24 @@
+$hight
+
+// test — минимальный тестовый каркас
+
+var tests_run = 0
+var tests_failed = 0
+
+fn assert(cond: bool, msg: ptr) {
+    tests_run += 1
+    if !cond {
+        tests_failed += 1
+        print("FAIL: ")
+        print(msg)
+        print("\n")
+    }
+}
+
+fn test_summary() {
+    print("Tests: ")
+    puti(tests_run)
+    print(" | Failed: ")
+    puti(tests_failed)
+    print("\n")
+}

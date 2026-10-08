@@ -1,0 +1,15 @@
+$hight
+
+// log — простой логгер
+
+fn info(msg: ptr) {
+    print("[INFO] ")
+    print(msg)
+    print("\n")
+}
+
+fn error(msg: ptr) {
+    print("[ERROR] ")
+    print(msg)
+    print("\n")
+}

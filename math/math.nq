@@ -1,0 +1,23 @@
+$hight
+
+// math — дополнительные математические функции
+
+import "std.math"
+
+fn gcd(a: i64, b: i64) -> i64 {
+    var x = abs(a)
+    var y = abs(b)
+    while y != 0 {
+        let t = y
+        y = x % y
+        x = t
+    }
+    return x
+}
+
+fn lcm(a: i64, b: i64) -> i64 {
+    if a == 0 || b == 0 {
+        return 0
+    }
+    return abs(a * b) / gcd(a, b)
+}

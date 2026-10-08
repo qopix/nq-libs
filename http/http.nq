@@ -1,3 +1,7 @@
 $hight
 
-// http — в разработке
+// http — HTTP клиент (в разработке)
+
+// Планируется:
+// - http_get(url)
+// - http_post(url, body)

@@ -1,0 +1,14 @@
+$low
+
+// os — системные вызовы
+
+const SYS_EXIT  = 60
+const SYS_WRITE = 1
+const SYS_READ  = 0
+const SYS_OPEN  = 2
+const SYS_CLOSE = 3
+
+fn exit(code: i64) {
+    asm("b8 3c 00 00 00")  // mov eax, 60
+    asm("0f 05")
+}

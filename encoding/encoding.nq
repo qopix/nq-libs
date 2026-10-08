@@ -1,0 +1,10 @@
+$hight
+
+// encoding — простые кодировки
+
+fn hex_digit(n: i64) -> u8 {
+    if n < 10 {
+        return cast(u8, 48 + n)  // 0-9
+    }
+    return cast(u8, 87 + n)      // a-f
+}
