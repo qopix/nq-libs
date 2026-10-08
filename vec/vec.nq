@@ -1,0 +1,43 @@
+$hight
+
+// vec — динамический массив i64
+
+type Vec struct {
+    data: ptr<i64>,
+    len:  i64,
+    cap:  i64,
+}
+
+fn vec_new(capacity: i64) -> ptr<Vec> {
+    let v = make(Vec, 1)
+    var cap = capacity
+    if cap < 4 {
+        cap = 4
+    }
+    v.data = make(i64, cap)
+    v.len  = 0
+    v.cap  = cap
+    return v
+}
+
+fn vec_push(v: ptr<Vec>, value: i64) {
+    if v.len >= v.cap {
+        let new_cap = v.cap * 2
+        let new_data = make(i64, new_cap)
+        for let i = 0; i < v.len; i += 1 {
+            new_data[i] = v.data[i]
+        }
+        v.data = new_data
+        v.cap  = new_cap
+    }
+    v.data[v.len] = value
+    v.len += 1
+}
+
+fn vec_get(v: ptr<Vec>, i: i64) -> i64 {
+    return v.data[i]
+}
+
+fn vec_len(v: ptr<Vec>) -> i64 {
+    return v.len
+}

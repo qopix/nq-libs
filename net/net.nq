@@ -1,0 +1,50 @@
+$low
+
+// net — TCP sockets for Nq
+// import "github.com/qopix/nq-libs/net"
+
+// Linux x86-64 syscalls
+const SYS_SOCKET  = 41
+const SYS_CONNECT = 42
+const SYS_SENDTO  = 44
+const SYS_RECVFROM = 45
+const SYS_CLOSE   = 3
+const SYS_WRITE   = 1
+const SYS_READ    = 0
+
+const AF_INET     = 2
+const SOCK_STREAM = 1
+const IPPROTO_TCP = 6
+
+// socket() -> fd
+fn socket() -> i64 {
+    // rax = 41, rdi = AF_INET, rsi = SOCK_STREAM, rdx = 0
+    asm("b8 29 00 00 00")      // mov eax, 41
+    asm("bf 02 00 00 00")      // mov edi, 2
+    asm("be 01 00 00 00")      // mov esi, 1
+    asm("ba 00 00 00 00")      // mov edx, 0
+    asm("0f 05")               // syscall
+    // результат уже в rax
+}
+
+// close(fd)
+fn close(fd: i64) -> i64 {
+    asm("b8 03 00 00 00")      // mov eax, 3
+    // rdi уже содержит fd
+    asm("0f 05")
+}
+
+// TODO: connect, send, recv
+// Пока заглушки
+
+fn connect(fd: i64, ip: i64, port: i64) -> i64 {
+    return -1
+}
+
+fn send(fd: i64, buf: ptr<u8>, len: i64) -> i64 {
+    return -1
+}
+
+fn recv(fd: i64, buf: ptr<u8>, len: i64) -> i64 {
+    return -1
+}

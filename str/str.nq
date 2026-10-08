@@ -1,0 +1,20 @@
+$hight
+
+// str — дополнительные строковые функции
+
+import "std.str"
+
+fn starts_with(s: ptr, prefix: ptr) -> bool {
+    let n = slen(prefix)
+    if slen(s) < n {
+        return false
+    }
+    var i = 0
+    while i < n {
+        if sbyte(s, i) != sbyte(prefix, i) {
+            return false
+        }
+        i += 1
+    }
+    return true
+}
