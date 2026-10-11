@@ -1,3 +1,43 @@
-$hight
+$mid
 
-// fs — файловая система
+// fs — работа с файлами
+// import "github.com/qopix/nq-libs/fs"
+
+import "std.os"
+import "std.mem"
+
+fn open_read(path: ptr) -> i64 {
+    return sys_open(cbytes(path), O_RDONLY, 0)
+}
+
+fn open_write(path: ptr) -> i64 {
+    return sys_open(cbytes(path), O_WRONLY | O_CREAT | O_TRUNC, 420)
+}
+
+fn open_append(path: ptr) -> i64 {
+    return sys_open(cbytes(path), O_WRONLY | O_CREAT | O_APPEND, 420)
+}
+
+fn read(fd: i64, buf: ptr<u8>, n: i64) -> i64 {
+    return sys_read(fd, buf, n)
+}
+
+fn write(fd: i64, buf: ptr<u8>, n: i64) -> i64 {
+    return sys_write(fd, buf, n)
+}
+
+fn write_str(fd: i64, s: ptr) -> i64 {
+    return fd_puts(fd, s)
+}
+
+fn close(fd: i64) -> i64 {
+    return sys_close(fd)
+}
+
+fn remove(path: ptr) -> i64 {
+    return sys_unlink(cbytes(path))
+}
+
+fn mkdir(path: ptr) -> i64 {
+    return sys_mkdir(cbytes(path), 493)
+}

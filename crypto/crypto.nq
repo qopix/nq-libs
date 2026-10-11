@@ -1,3 +1,14 @@
 $hight
 
-// crypto — в разработке
+// crypto — простые примитивы (не для продакшена)
+// import "github.com/qopix/nq-libs/crypto"
+
+// XOR буфера ключом (key повторяется)
+fn xor_bytes(buf: ptr<u8>, n: i64, key: ptr<u8>, keylen: i64) {
+    if keylen <= 0 { return }
+    var i = 0
+    while i < n {
+        buf[i] = cast(u8, cast(i64, buf[i]) ^ cast(i64, key[i % keylen]))
+        i += 1
+    }
+}

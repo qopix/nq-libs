@@ -1,3 +1,30 @@
 $hight
 
-// test — тестовый каркас
+// test — минимальный тестовый каркас
+// import "github.com/qopix/nq-libs/test"
+
+var tests_run: i64 = 0
+var tests_failed: i64 = 0
+
+fn assert(cond: bool, msg: ptr) {
+    tests_run += 1
+    if !cond {
+        tests_failed += 1
+        print("FAIL: ")
+        print(msg)
+        print("\n")
+    }
+}
+
+fn assert_eq(a: i64, b: i64, msg: ptr) {
+    assert(a == b, msg)
+}
+
+fn test_summary() {
+    print("Tests: ")
+    puti(tests_run)
+    print(" | Failed: ")
+    puti(tests_failed)
+    print("\n")
+}
+ 

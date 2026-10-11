@@ -1,3 +1,21 @@
 $hight
 
-// encoding — в разработке
+// encoding — hex
+// import "github.com/qopix/nq-libs/encoding"
+
+fn hex_char(n: i64) -> u8 {
+    if n < 10 { return cast(u8, 48 + n) }
+    return cast(u8, 87 + n)
+}
+
+// пишет hex в out, возвращает число записанных байт (n*2)
+fn hex_encode(src: ptr<u8>, n: i64, out: ptr<u8>) -> i64 {
+    var i = 0
+    while i < n {
+        let b = cast(i64, src[i])
+        out[i * 2]     = hex_char((b >> 4) & 15)
+        out[i * 2 + 1] = hex_char(b & 15)
+        i += 1
+    }
+    return n * 2
+}

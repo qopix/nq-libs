@@ -1,24 +1,34 @@
-$hight
+$mid
 
-import "std.math"
+// http — простой HTTP/1.1 GET-клиент
+// import "github.com/qopix/nq-libs/http"
 
-fn gcd(a: i64, b: i64) -> i64 {
-    var x = abs(a)
-    var y = abs(b)
-    while y != 0 {
-        let t = y
-        y = x % y
-        x = t
+import "github.com/qopix/nq-libs/net"
+import "std.os"
+import "std.mem"
+
+// http_get(ip, port, host, path, buf, buflen) -> число прочитанных байт (или <0)
+// Пример: http_get(ip4(1,2,3,4), 80, "example.com", "/", buf, 4096)
+fn http_get(ip: u32, port: i64, host: ptr, path: ptr, buf: ptr<u8>, buflen: i64) -> i64 {
+    let fd = socket_tcp()
+    if fd < 0 { return fd }
+    let c = connect(fd, ip, port)
+    if c < 0 {
+        close(fd)
+        return c
     }
-    return x
+    // Собираем запрос вручную через несколько send_str
+    send_str(fd, "GET ")
+    send_str(fd, path)
+    send_str(fd, " HTTP/1.0\r\nHost: ")
+    send_str(fd, host)
+    send_str(fd, "\r\nConnection: close\r\n\r\n")
+    var total = 0
+    while total < buflen {
+        let n = recv(fd, buf + total, buflen - total)
+        if n <= 0 { break }
+        total += n
+    }
+    close(fd)
+    return total
 }
-
-fn lcm(a: i64, b: i64) -> i64 {
-    if a == 0 || b == 0 { return 0 }
-    return abs(a * b) / gcd(a, b)
-}
-printf
-%s\n
-$hight
-
-// http — HTTP клиент (в разработке)

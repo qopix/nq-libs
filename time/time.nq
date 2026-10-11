@@ -1,3 +1,27 @@
-$hight
+$mid
 
-// time — в разработке
+// time — время
+// import "github.com/qopix/nq-libs/time"
+
+import "std.mem"
+
+// clock_gettime(CLOCK_REALTIME=0) -> секунды с 1970
+fn unix_now() -> i64 {
+    let ts = make(u8, 16)
+    zero(ts, 16)
+    let r = syscall(228, 0, ts)
+    if r < 0 { return r }
+    // timespec: sec i64, nsec i64
+    return cast(i64, deref(cast(ptr<i64>, ts)))
+}
+
+fn sleep_ms(ms: i64) {
+    let ts = make(u8, 16)
+    zero(ts, 16)
+    let sec = ms / 1000
+    let nsec = (ms % 1000) * 1000000
+    let p = cast(ptr<i64>, ts)
+    deref(p) = sec
+    deref(p + 1) = nsec
+    syscall(35, ts, 0)  // nanosleep
+}

@@ -1,3 +1,9 @@
 $hight
 
-// https — в разработке
+// https — пока заглушка
+// Полноценный TLS требует большой крипто-стек.
+// Используй http на порту 80 или внешний прокси.
+
+fn https_get(ip: u32, port: i64, host: ptr, path: ptr, buf: ptr<u8>, buflen: i64) -> i64 {
+    return -1
+}

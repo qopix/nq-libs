@@ -1,3 +1,10 @@
-$hight
+$mid
 
-// os — обёртки над std.os
+// os — удобные обёртки
+// import "github.com/qopix/nq-libs/os"
+
+import "std.os"
+
+fn pid() -> i64 { return getpid() }
+
+fn exit_code(code: i64) { exit(code) }

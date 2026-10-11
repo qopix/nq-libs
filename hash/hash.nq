@@ -1,3 +1,39 @@
 $hight
 
-// hash — в разработке
+// hash — хеш-функции
+// import "github.com/qopix/nq-libs/hash"
+
+import "std.str"
+
+fn djb2(s: ptr) -> i64 {
+    var h = 5381
+    let n = slen(s)
+    var i = 0
+    while i < n {
+        h = ((h << 5) + h) + cast(i64, sbyte(s, i))
+        i += 1
+    }
+    return h
+}
+
+fn fnv1a(s: ptr) -> i64 {
+    var h = cast(i64, 2166136261)
+    let n = slen(s)
+    var i = 0
+    while i < n {
+        h = h ^ cast(i64, sbyte(s, i))
+        h = h * 16777619
+        i += 1
+    }
+    return h
+}
+
+fn hash_bytes(p: ptr<u8>, n: i64) -> i64 {
+    var h = 5381
+    var i = 0
+    while i < n {
+        h = ((h << 5) + h) + cast(i64, p[i])
+        i += 1
+    }
+    return h
+}
