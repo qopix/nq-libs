@@ -1,20 +1,33 @@
 $hight
 
-// str — дополнительные строковые функции
-
 import "std.str"
 
 fn starts_with(s: ptr, prefix: ptr) -> bool {
     let n = slen(prefix)
-    if slen(s) < n {
-        return false
-    }
+    if slen(s) < n { return false }
     var i = 0
     while i < n {
-        if sbyte(s, i) != sbyte(prefix, i) {
-            return false
-        }
+        if sbyte(s, i) != sbyte(prefix, i) { return false }
         i += 1
     }
     return true
+}
+
+fn contains(s: ptr, sub: ptr) -> bool {
+    let n = slen(s)
+    let m = slen(sub)
+    if m == 0 { return true }
+    if m > n { return false }
+    var i = 0
+    while i <= n - m {
+        var ok = true
+        var j = 0
+        while j < m {
+            if sbyte(s, i + j) != sbyte(sub, j) { ok = false; break }
+            j += 1
+        }
+        if ok { return true }
+        i += 1
+    }
+    return false
 }

@@ -1,50 +1,47 @@
-$low
+$mid
 
-// net — TCP sockets for Nq
+// net — TCP sockets (Linux x86-64)
 // import "github.com/qopix/nq-libs/net"
 
-// Linux x86-64 syscalls
-const SYS_SOCKET  = 41
-const SYS_CONNECT = 42
-const SYS_SENDTO  = 44
-const SYS_RECVFROM = 45
-const SYS_CLOSE   = 3
-const SYS_WRITE   = 1
-const SYS_READ    = 0
+import "std.os"
+import "std.mem"
 
-const AF_INET     = 2
+const AF_INET = 2
 const SOCK_STREAM = 1
-const IPPROTO_TCP = 6
 
-// socket() -> fd
-fn socket() -> i64 {
-    // rax = 41, rdi = AF_INET, rsi = SOCK_STREAM, rdx = 0
-    asm("b8 29 00 00 00")      // mov eax, 41
-    asm("bf 02 00 00 00")      // mov edi, 2
-    asm("be 01 00 00 00")      // mov esi, 1
-    asm("ba 00 00 00 00")      // mov edx, 0
-    asm("0f 05")               // syscall
-    // результат уже в rax
+fn htons(x: i64) -> u16 {
+    let v = cast(u16, x)
+    return cast(u16, ((v & 255) << 8) | ((v >> 8) & 255))
 }
 
-// close(fd)
-fn close(fd: i64) -> i64 {
-    asm("b8 03 00 00 00")      // mov eax, 3
-    // rdi уже содержит fd
-    asm("0f 05")
+fn htonl(x: i64) -> u32 {
+    let v = cast(u32, x)
+    return cast(u32, ((v & 255) << 24) | ((v & 65280) << 8) | ((v >> 8) & 65280) | ((v >> 24) & 255))
 }
 
-// TODO: connect, send, recv
-// Пока заглушки
-
-fn connect(fd: i64, ip: i64, port: i64) -> i64 {
-    return -1
+fn ip4(a: i64, b: i64, c: i64, d: i64) -> u32 {
+    return htonl((a << 24) | (b << 16) | (c << 8) | d)
 }
 
-fn send(fd: i64, buf: ptr<u8>, len: i64) -> i64 {
-    return -1
+fn socket_tcp() -> i64 { return syscall(41, AF_INET, SOCK_STREAM, 0) }
+fn close(fd: i64) -> i64 { return syscall(3, fd) }
+
+fn connect(fd: i64, ip: u32, port: i64) -> i64 {
+    let sa = make(u8, 16)
+    zero(sa, 16)
+    sa[0] = 2
+    sa[1] = 0
+    let p = htons(port)
+    sa[2] = cast(u8, p & 255)
+    sa[3] = cast(u8, (p >> 8) & 255)
+    let a = cast(i64, ip)
+    sa[4] = cast(u8, a & 255)
+    sa[5] = cast(u8, (a >> 8) & 255)
+    sa[6] = cast(u8, (a >> 16) & 255)
+    sa[7] = cast(u8, (a >> 24) & 255)
+    return syscall(42, fd, sa, 16)
 }
 
-fn recv(fd: i64, buf: ptr<u8>, len: i64) -> i64 {
-    return -1
-}
+fn send(fd: i64, buf: ptr<u8>, len: i64) -> i64 { return syscall(1, fd, buf, len) }
+fn recv(fd: i64, buf: ptr<u8>, len: i64) -> i64 { return syscall(0, fd, buf, len) }
+fn send_str(fd: i64, s: ptr) -> i64 { return send(fd, cbytes(s), deref(s)) }

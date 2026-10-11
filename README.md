@@ -2,28 +2,26 @@
 
 **English** | **Русский**
 
-Official and community libraries for the [Nq](https://github.com/qopix/nq) programming language.
+Libraries for [Nq](https://github.com/qopix/nq) programming language.
 
 ---
 
 ## English
 
-Collection of useful libraries for Nq.
-
-### Libraries
-
-| Library     | Status     | Description                          |
-|-------------|------------|--------------------------------------|
-| `net`       | In progress | TCP/UDP sockets                     |
-| `http`      | Planned    | Simple HTTP client                   |
-| `https`     | Planned    | HTTPS support                        |
-| `json`      | Planned    | JSON parser & serializer             |
-| `fs`        | Planned    | File system operations               |
-| `time`      | Planned    | Time and timers                      |
-| `hash`      | Planned    | Hash functions                       |
-| `crypto`    | Planned    | Basic cryptography                   |
-| `str`       | Planned    | Extended string utilities            |
-| `vec`       | Planned    | Dynamic array (vector)               |
+| Library | Status | Description |
+|---------|--------|-------------|
+| `net` | Ready | TCP sockets (socket, connect, send, recv) |
+| `vec` | Ready | Dynamic array |
+| `str` | Ready | String helpers (starts_with, contains) |
+| `log` | Ready | Simple logger |
+| `math` | Ready | gcd, lcm |
+| `http` | Planned | HTTP client |
+| `https` | Planned | HTTPS |
+| `json` | Planned | JSON parser |
+| `fs` | Planned | Filesystem |
+| `time` | Planned | Time |
+| `hash` | Planned | Hash functions |
+| `crypto` | Planned | Crypto |
 
 ### Usage
 
@@ -31,31 +29,26 @@ Collection of useful libraries for Nq.
 import "github.com/qopix/nq-libs/net"
 ```
 
-### Requirements
-
-- Nq compiler (`nqc`) ≥ 0.3
-- Linux x86-64
+Requires Nq ≥ 0.4 and Linux x86-64.
 
 ---
 
 ## Русский
 
-Официальные и общественные библиотеки для языка программирования [Nq](https://github.com/qopix/nq).
-
-### Библиотеки
-
-| Библиотека  | Статус     | Описание                             |
-|-------------|------------|--------------------------------------|
-| `net`       | В работе   | TCP/UDP сокеты                       |
-| `http`      | Планируется| Простой HTTP-клиент                  |
-| `https`     | Планируется| Поддержка HTTPS                      |
-| `json`      | Планируется| Парсер и генератор JSON              |
-| `fs`        | Планируется| Работа с файловой системой           |
-| `time`      | Планируется| Время и таймеры                      |
-| `hash`      | Планируется| Хеш-функции                          |
-| `crypto`    | Планируется| Базовая криптография                 |
-| `str`       | Планируется| Расширенные строковые функции        |
-| `vec`       | Планируется| Динамический массив                  |
+| Библиотека | Статус | Описание |
+|------------|--------|----------|
+| `net` | Готово | TCP-сокеты (socket, connect, send, recv) |
+| `vec` | Готово | Динамический массив |
+| `str` | Готово | Строки (starts_with, contains) |
+| `log` | Готово | Логгер |
+| `math` | Готово | gcd, lcm |
+| `http` | Планируется | HTTP-клиент |
+| `https` | Планируется | HTTPS |
+| `json` | Планируется | JSON |
+| `fs` | Планируется | Файлы |
+| `time` | Планируется | Время |
+| `hash` | Планируется | Хеши |
+| `crypto` | Планируется | Крипто |
 
 ### Использование
 
@@ -63,7 +56,4 @@ import "github.com/qopix/nq-libs/net"
 import "github.com/qopix/nq-libs/net"
 ```
 
-### Требования
-
-- Компилятор Nq (`nqc`) ≥ 0.3
-- Linux x86-64
+Нужен Nq ≥ 0.4 и Linux x86-64.
